@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:p="http://www.springframework.org/schema/p"  
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx" 
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+            http://www.springframework.org/schema/beans/spring-beans.xsd  
+		    http://www.springframework.org/schema/context   
+		    http://www.springframework.org/schema/context/spring-context.xsd  
+		    http://www.springframework.org/schema/aop  
+		    http://www.springframework.org/schema/aop/spring-aop.xsd  
+		    http://www.springframework.org/schema/tx  
+		    http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+   	<bean id="transactionManager" class="com.itany.frame.spring.tx.HibernateTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<aop:config>
+		<!-- 第一个*代表所有的返回值类型；第二个*代表所有的类；第三个*代表类所有方法；..代表子或者孙子包；最后一个..代表所有的参数 -->
+		<aop:pointcut id="transactionPointcut" expression="execution(* com.itany..service.*.*(..)) || execution(* com.itany..service.*.*(..))" />
+		<aop:advisor pointcut-ref="transactionPointcut" advice-ref="logInterceptor" />
+	</aop:config>	
+
+	<!-- 自定义流程BEAN加载 -->  
+	<bean id="writeFileProcess" class="com.cloudsea.sys.module.bpm.Process">
+		<property name="currentStatus">
+			<ref bean="writerRoomStatus" />
+		</property>
+		<property name="statusMap">
+			<map>
+				<entry key="writerRoomStatus" value-ref="writerRoomStatus" />
+				<entry key="officeStatus" value-ref="officeStatus" />
+				<entry key="deptleaderStatus" value-ref="deptleaderStatus" />
+			</map>
+		</property>
+	</bean> 
+	
+	
+	<bean id="deptleaderStatus" class="com.cloudsea.sys.module.bpm.status.DeptleaderStatus">
+		<constructor-arg name="process" ref="writeFileProcess"/>
+		<constructor-arg name="eventSourceMap">
+			<map>
+				<entry key="auditPass" value-ref="deptleaderAuditPassEventSource" />
+				<entry key="auditBack" value-ref="deptleaderAuditBackEventSource" />
+				<entry key="write" value-ref="deptleaderWriteEventSource" />
+			</map>
+		</constructor-arg>
+	</bean> 
+	
+	<bean id="officeStatus" class="com.cloudsea.sys.module.bpm.status.OfficeStatus">
+		<constructor-arg name="process" ref="writeFileProcess"/>
+		<constructor-arg name="eventSourceMap">
+			<map>
+				<entry key="auditPass" value-ref="officeAuditPassEvent" />
+				<entry key="auditBack" value-ref="officeAuditBackEventSource" />
+				<entry key="publish" value-ref="officePublishEventSource" />
+			</map>
+		</constructor-arg>
+	</bean> 
+	
+	<bean id="writerRoomStatus" class="com.cloudsea.sys.module.bpm.status.WriterRoomStatus">
+		<constructor-arg name="process" ref="writeFileProcess"/>
+		<constructor-arg name="eventSourceMap">
+			<map>
+				<entry key="write" value-ref="writerRoomWriteEventSource" />
+			</map>
+		</constructor-arg>
+	</bean> 
+	
+	
+	<bean id="deptleaderAuditBackEventSource" class="com.cloudsea.sys.module.bpm.observable.DeptleaderAuditBackEventSource">
+		<constructor-arg name="listenerList">
+			<list>
+				<ref bean="noticeModifyListener"/>
+			</list>
+		</constructor-arg>
+	</bean> 
+	
+	<bean id="deptleaderAuditPassEventSource" class="com.cloudsea.sys.module.bpm.observable.DeptleaderAuditPassEventSource">
+		<constructor-arg name="listenerList">
+			<list>
+				<ref bean="noticePublishListener"/>
+			</list>
+		</constructor-arg>
+	</bean> 
+	
+	<bean id="deptleaderWriteEventSource" class="com.cloudsea.sys.module.bpm.observable.DeptleaderWriteEventSource">
+		<constructor-arg name="listenerList">
+			<list>
+				<ref bean="updateArticleListener"/>
+			</list>
+		</constructor-arg>
+	</bean> 
+	
+	<bean id="officeAuditBackEventSource" class="com.cloudsea.sys.module.bpm.observable.OfficeAuditBackEventSource">
+		<constructor-arg name="listenerList">
+			<list>
+				<ref bean="noticeModifyListener"/>
+			</list>
+		</constructor-arg>
+	</bean> 
+	
+	<bean id="officeAuditPassEvent" class="com.cloudsea.sys.module.bpm.observable.OfficeAuditPassEventSource">
+		<constructor-arg name="listenerList">
+			<list>
+				<ref bean="officeAuditPassListener"/>
+				<ref bean="noticeAuditListener"/>
+			</list>
+		</constructor-arg>
+	</bean> 
+	
+	<bean id="officePublishEventSource" class="com.cloudsea.sys.module.bpm.observable.OfficePublishEventSource">
+		<constructor-arg name="listenerList">
+			<list>
+				<ref bean="printArticleListener"/>
+			</list>
+		</constructor-arg>
+	</bean> 
+	
+	<bean id="writerRoomWriteEventSource" class="com.cloudsea.sys.module.bpm.observable.WriterRoomWriteEventSource">
+		<constructor-arg name="listenerList">
+			<list>
+				<ref bean="writeArticleListener"/>
+				<ref bean="noticeAuditListener"/>
+				<ref bean="updateArticleListener"/>
+			</list>
+		</constructor-arg>
+	</bean> 
+	
+	
+	
+	</beans>

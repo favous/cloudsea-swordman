@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.itany.frame.entity">
+
+	<class name="User1"  table="t_user5" >
+		
+		<id name="id">
+			<!-- Hibernate 3.6开始uuid好像不可以用了，要用uuid2 -->
+			<generator class="uuid2"/>
+		</id>
+		<property name="name"/>
+		<property name="password"/>
+		<property name="createTime"/>
+		<property name="expireTime"/>
+		
+	</class>
+	
+</hibernate-mapping>

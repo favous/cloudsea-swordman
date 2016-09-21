@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+    xmlns:beans="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+           http://www.springframework.org/schema/security
+           http://www.springframework.org/schema/security/spring-security-3.2.xsd">
+	
+
+	<!-- 此配置表示不需要过滤任何请求，放过所有的请求，非开发情况下，删除此配置  -->
+		<http pattern="/**/*" security="none"></http>  
+	
+	<!-- 不要过滤图片等静态资源  filters="none"-->  
+	<http pattern="/images/**" security="none"></http>   
+	<http pattern="/**/*.jpg" security="none"></http>   
+	<http pattern="/**/*.png" security="none"></http>   
+	<http pattern="/**/*.gif" security="none"></http>   
+	<http pattern="/**/*.css" security="none"></http>  
+	<http pattern="/**/*.js" security="none"></http>  
+    
+    <!-- 登陆页和忘记密码或注册等不需要过滤的页面 -->  
+	<http pattern="/index.action" security="none"></http>  
+	<http pattern="/index.html" security="none"></http>  
+	<http pattern="/index" security="none"></http>  
+	<http pattern="/WEB-INF/jsp/sys/user/login/login.jsp" security="none"></http>  
+	<http pattern="/jsp/forgotpassword.jsp" security="none"></http>  
+
+	<!--auto-config="true"，表示服务启动时自动加载所有的过滤器链 -->
+	<http auto-config="true" access-denied-page="/user/denied">  
+	
+		<!--   
+				default-target-url       指定了从登录页面登录后进行跳转的页面  
+				always-use-default-target   true表示登录成功后强制跳转  
+				authentication-failure-url  表示验证失败后进入的页面  
+				login-processing-url       设置验证登录验证地址，如果不设置，默认是j_spring_security_check  
+				username-parameter,password-parameter     设置登录用户名和密码的请求name，默认：j_username,j_password  
+				default-target-url="/user/home"   
+			   -->  
+		<form-login login-page="/user/login"  
+			always-use-default-target="true"  
+			authentication-failure-url="/user/login?error=1"  
+			login-processing-url="/logincheck"  
+			authentication-success-handler-ref="accessDecisionManagerImpl"/>  
+      
+		<logout logout-url="/logout" logout-success-url="/user/login"/>  
+		
+		<remember-me data-source-ref="dataSource" />  
+		
+		<!--   
+				 error-if-maximum-exceeded 后登陆的账号会挤掉第一次登陆的账号   
+				 session-fixation-protection  防止伪造sessionid攻击,用户登录成功后会销毁用户当前的session。  
+			-->  
+		<session-management invalid-session-url="/user/timedout" session-fixation-protection="none">  
+			<concurrency-control max-sessions="1" error-if-maximum-exceeded="true"/>  
+		</session-management>  
+		
+		<!-- 增加一个自定义的filter，放在FILTER_SECURITY_INTERCEPTOR之前，实现用户、角色、权限、资源的数据库管理。  -->
+		<custom-filter ref="mySecurityFilter" before="FILTER_SECURITY_INTERCEPTOR"/>  
+	</http>  
+    
+	<authentication-manager alias="authManager">  
+		<authentication-provider user-service-ref="userDetailsServiceImpl">  
+			<!--<jdbc-user-service data-source-ref="dataSource"   
+				authorities-by-username-query=""  
+				group-authorities-by-username-query=""/> -->  
+			<password-encoder hash="md5">  
+				<salt-source user-property="username"/>   <!-- 盐值  [添加这个属性后，加密密码明文为:"密码明文{盐值}"] -->  
+			</password-encoder>  
+          
+		</authentication-provider>  
+	</authentication-manager>  
+    
+	<!-- 自定义过滤器  －－配置加载比用注解加载property的好处：可以加载父类对象中的property-->  
+	<beans:bean id="mySecurityFilter" class="com.cloudsea.sys.module.security.SecurityFilterInterceptor">  
+		<beans:property name="accessDecisionManager" ref="accessDecisionManagerImpl"></beans:property>  
+		<beans:property name="fisMetadataSource" ref="securityMetadataSourceImpl"></beans:property>  
+		<beans:property name="authenticationManager" ref="authManager"></beans:property>  
+	</beans:bean>  
+        
+	<!-- 启用用户的缓存功能 
+	<bean id="userCache"
+		class="org.springframework.security.core.userdetails.cache.EhCacheBasedUserCache">
+		<property name="cache" ref="userEhCache" />
+	</bean>
+ 
+	<bean id="userEhCache" class="org.springframework.cache.ehcache.EhCacheFactoryBean">
+		<property name="cacheName" value="userCache" />
+		<property name="cacheManager" ref="cacheManager" />
+	</bean>
+ 
+	<bean id="cacheManager"
+		class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean" />
+  -->
+	<!-- spring security自带的与权限有关的数据读写Jdbc模板
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSource" />
+	</bean> 
+	-->
+         
+</beans:beans>

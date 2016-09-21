@@ -1,0 +1,48 @@
+
+com.itany.frame.spring.ioc.AnotationConfigApplicatinContext@242ff4
+deptleaderAuditBackEventSource	com.cloudsea.sys.module.bpm.observable.DeptleaderAuditBackEventSource@1c86961
+officeAuditBackEventSource	com.cloudsea.sys.module.bpm.observable.OfficeAuditBackEventSource@7e77c9
+noticeAuditListener	com.cloudsea.sys.module.bpm.observers.NoticeAuditListener@ea348e
+officePublishEventSource	com.cloudsea.sys.module.bpm.observable.OfficePublishEventSource@205f4f
+updateArticleListener	com.cloudsea.sys.module.bpm.observers.UpdateArticleListener@1513b99
+userService	com.itany.frame.service.UserService@1fe177
+writerRoomStatus	com.cloudsea.sys.module.bpm.status.WriterRoomStatus@10b53e6
+localSessionFactoryBean	org.hibernate.internal.SessionFactoryImpl@b12fef
+writeFileProcess	com.cloudsea.sys.module.bpm.Process@c21e52
+noticeModifyListener	com.cloudsea.sys.module.bpm.observers.NoticeModifyListener@54d24d
+&localSessionFactoryBean	com.itany.frame.spring.hibernate.LocalSessionFactoryBean@bac287
+printArticleListener	com.cloudsea.sys.module.bpm.observers.PrintArticleListener@1395158
+noticePublishListener	com.cloudsea.sys.module.bpm.observers.NoticePublishListener@b7036
+deptleaderWriteEventSource	com.cloudsea.sys.module.bpm.observable.DeptleaderWriteEventSource@f428d9
+officeAuditPassListener	com.cloudsea.sys.module.bpm.observers.OfficeAuditPassListener@1a5e91b
+deptleaderAuditPassEventSource	com.cloudsea.sys.module.bpm.observable.DeptleaderAuditPassEventSource@16af9cb
+officeAuditPassEvent	com.cloudsea.sys.module.bpm.observable.OfficeAuditPassEventSource@3593ab
+deptleaderStatus	com.cloudsea.sys.module.bpm.status.DeptleaderStatus@171d740
+userAction	com.itany.frame.action.UserAction@eacb4a
+officeStatus	com.cloudsea.sys.module.bpm.status.OfficeStatus@c88db2
+userDao	com.itany.frame.dao.UserDao@cee11e
+writeArticleListener	com.cloudsea.sys.module.bpm.observers.WriteArticleListener@1da30b
+writerRoomWriteEventSource	com.cloudsea.sys.module.bpm.observable.WriterRoomWriteEventSource@1bb2d63
+class com.itany.frame.dao.UserDao	com.itany.frame.dao.UserDao@cee11e
+class com.itany.frame.service.UserService	com.itany.frame.service.UserService@1fe177
+class com.cloudsea.sys.module.bpm.observable.DeptleaderAuditPassEventSource	com.cloudsea.sys.module.bpm.observable.DeptleaderAuditPassEventSource@16af9cb
+class com.cloudsea.sys.module.bpm.observable.OfficePublishEventSource	com.cloudsea.sys.module.bpm.observable.OfficePublishEventSource@205f4f
+class com.itany.frame.spring.hibernate.LocalSessionFactoryBean	com.itany.frame.spring.hibernate.LocalSessionFactoryBean@bac287
+class com.cloudsea.sys.module.bpm.observable.WriterRoomWriteEventSource	com.cloudsea.sys.module.bpm.observable.WriterRoomWriteEventSource@1bb2d63
+class com.cloudsea.sys.module.bpm.observers.PrintArticleListener	com.cloudsea.sys.module.bpm.observers.PrintArticleListener@1395158
+class com.cloudsea.sys.module.bpm.observers.UpdateArticleListener	com.cloudsea.sys.module.bpm.observers.UpdateArticleListener@1513b99
+class com.cloudsea.sys.module.bpm.observers.NoticePublishListener	com.cloudsea.sys.module.bpm.observers.NoticePublishListener@b7036
+class com.cloudsea.sys.module.bpm.observers.NoticeModifyListener	com.cloudsea.sys.module.bpm.observers.NoticeModifyListener@54d24d
+class com.cloudsea.sys.module.bpm.observers.OfficeAuditPassListener	com.cloudsea.sys.module.bpm.observers.OfficeAuditPassListener@1a5e91b
+class com.cloudsea.sys.module.bpm.Process	com.cloudsea.sys.module.bpm.Process@c21e52
+class com.cloudsea.sys.module.bpm.status.OfficeStatus	com.cloudsea.sys.module.bpm.status.OfficeStatus@c88db2
+class com.itany.frame.action.UserAction	com.itany.frame.action.UserAction@eacb4a
+class com.cloudsea.sys.module.bpm.status.DeptleaderStatus	com.cloudsea.sys.module.bpm.status.DeptleaderStatus@171d740
+class com.cloudsea.sys.module.bpm.observers.NoticeAuditListener	com.cloudsea.sys.module.bpm.observers.NoticeAuditListener@ea348e
+class com.cloudsea.sys.module.bpm.status.WriterRoomStatus	com.cloudsea.sys.module.bpm.status.WriterRoomStatus@10b53e6
+class com.cloudsea.sys.module.bpm.observable.OfficeAuditBackEventSource	com.cloudsea.sys.module.bpm.observable.OfficeAuditBackEventSource@7e77c9
+class org.hibernate.internal.SessionFactoryImpl	org.hibernate.internal.SessionFactoryImpl@b12fef
+class com.cloudsea.sys.module.bpm.observable.DeptleaderWriteEventSource	com.cloudsea.sys.module.bpm.observable.DeptleaderWriteEventSource@f428d9
+class com.cloudsea.sys.module.bpm.observable.OfficeAuditPassEventSource	com.cloudsea.sys.module.bpm.observable.OfficeAuditPassEventSource@3593ab
+class com.cloudsea.sys.module.bpm.observers.WriteArticleListener	com.cloudsea.sys.module.bpm.observers.WriteArticleListener@1da30b
+class com.cloudsea.sys.module.bpm.observable.DeptleaderAuditBackEventSource	com.cloudsea.sys.module.bpm.observable.DeptleaderAuditBackEventSource@1c86961

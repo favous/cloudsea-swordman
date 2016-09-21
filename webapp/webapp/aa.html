@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>fancyBox - iframe demo</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<style type="text/css">
+.column {
+	padding-left: 20px;
+	padding-bottom: 0px;
+	float: left;
+	box-sizing: border-box;
+}
+
+.gallery-item {
+	padding-bottom: 0px;
+	zoom: 1;
+	opacity: 1;
+}
+
+.picture {
+	width: 100%;
+	height: auto;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+</style>
+
+<script type="text/javascript" src="lib/common/jquery-1.10.1.min.js"></script>
+
+<script type="text/javascript">
+	
+	$(document).ready(function() {
+		var random = parseInt(10 * Math.random()) + 1;
+		var colNum = 5;
+		var pictures = [ {
+			src : '1_s.jpg', icon_src:'fancyBox/demo/a' + (parseInt(11 * Math.random()) + 1) + '.jpg'
+		}, {
+			src : '2.gif', icon_src:'fancyBox/demo/a' + (parseInt(11 * Math.random()) + 1) + '.jpg'
+		}, {
+			src : '3.jpg', icon_src:'fancyBox/demo/a' + (parseInt(11 * Math.random()) + 1) + '.jpg'
+		}, {
+			src : '4.gif', icon_src:'fancyBox/demo/a' + (parseInt(11 * Math.random()) + 1) + '.jpg'
+		}, {
+			src : '2.gif', icon_src:'fancyBox/demo/11.gif'
+		} ];
+
+		var colWidth = parseInt(100 / colNum) + '%';
+		var $gallery = $('<ul></ul>');
+		$gallery.appendTo($('#gallery'));
+
+		for (var i = 0; i < colNum; i++) {
+			var $column = $('<div></div>');
+			$column.addClass('column');
+			$column.css({
+				'width' : colWidth,
+				/* 'padding-left' : '20px',
+				'padding-bottom' : '0px',
+				'float' : 'left',
+				'box-sizing' : 'border-box' */
+			});
+			$column.appendTo($gallery);
+		}
+
+		var $col = $('.column')
+		for (var i = 0; i < pictures.length; i++) {
+			var $li = $('<li></li>');
+			$li.addClass('gallery-item');
+			$li.appendTo($col);
+
+			var $a = $('<a></a>');
+			$a.attr('href', pictures[i].src);
+			$a.appendTo($li);
+
+			var $img = $('<img/>');
+			$img.attr('src', pictures[i].icon_src);
+			$img.appendTo($a);
+		}
+
+	});
+</script>
+
+</head>
+
+<body>
+
+	<div id='gallery'></div>
+</body>
+</html>

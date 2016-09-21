@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jaxws="http://cxf.apache.org/jaxws"
+	xsi:schemaLocation="
+ http://www.springframework.org/schema/beans
+ http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+ http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
+
+
+	<import resource="classpath:META-INF/cxf/cxf.xml" />
+	<import resource="classpath:META-INF/cxf/cxf-extension-soap.xml" />
+	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
+	<!---->
+	
+	<!--
+	<bean id="outLoggingInterceptor" class="org.apache.cxf.interceptor.LoggingOutInterceptor" />
+	 <bean id="testWebServiceBean" class="com.sumecom.smms.server.remote.impl.TestRemote"></bean>
+	 <bean id="processInterceptor" class="com.sumecom.smms.server.interceptor.ProcessInterceptor" />
+	 注意下面的address，这里的address的名称就是访问的WebService的name 
+	 
+  	     调用test  webservice
+     
+	<jaxws:server id="testWebService" serviceClass=""
+		address="/test">
+
+			<jaxws:inInterceptors>
+			 <ref bean="processInterceptor"/>
+
+			</jaxws:inInterceptors>
+	
+		<jaxws:serviceBean>
+			<ref bean="testWebServiceBean" />
+		</jaxws:serviceBean>
+		<jaxws:outInterceptors>
+			<ref bean="outLoggingInterceptor" />
+		</jaxws:outInterceptors>
+	</jaxws:server>-->
+	
+	<!--ERP提供的外部接口
+	<jaxws:server id="bsdERPWebServerForPI" serviceClass="com.bsd.cxfserver.erp.BsdERPWebServerForPIImpl"
+		address="/BsdERPWebServerForPI">
+		
+	</jaxws:server>
+	-->
+	
+	<!-- ERP对外接口实现类 -->
+    <bean id="TestReceiveServerImpl" class="com.cloudsea.sys.itf.cxf.receive.port.TestReceiveServerImpl" />
+    <!-- 发布ERP 对外接口-->
+    <jaxws:endpoint id="TestReceiveWebservice" implementor="#TestReceiveServerImpl" address="/TestReceiveServer" />
+	
+	<bean id="TestImpl" class="com.cloudsea.sys.itf.cxf.receive.port.TestImpl" />
+    <jaxws:endpoint id="TestImpl1111" implementor="#TestImpl"  address="/Test" />
+    
+		 
+</beans>

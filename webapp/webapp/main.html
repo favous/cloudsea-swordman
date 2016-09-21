@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<!-- saved from url=(0046)http://zc.suning.com/myCF/showMyCF.htm#unknown -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>新蜂摄影</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+
+<style type="text/css">
+body, button, input, select, textarea {
+	font: 12px/1.5 'Microsoft Yahei', \5b8b\4f53
+
+}
+
+li, ol, ul {
+	list-style: none
+}
+
+body, button, dd, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, hr, input, legend, li, ol, p, td,
+	textarea, th, ul {
+	margin: 0;
+	padding: 0
+}
+
+body {
+	background-color: #FBF9FB;
+}
+
+a {
+	color: #333;
+	text-decoration: none;
+	outline: 0
+}
+
+.column {
+	padding-right: 20px;
+	float: left;
+	box-sizing: border-box;
+	display: block;
+}
+
+.gallery-item {
+	zoom: 1;
+	opacity: 1;
+	display: block;
+}
+
+.icon {
+	padding-bottom: 20px;
+	height: auto;
+	display: block;
+}
+#floatBar {
+	position:fixed; 
+    width: 75px;
+	right: -42px;
+	z-index:30; 
+	top:300;  
+    color: #FFF;
+	font-size: 14px;
+    font-weight: 700;
+    text-align: left;
+	padding-top:5px;
+}
+
+.barBlock {
+	background-color: #AEB2BD;
+	display:table;  
+}
+
+.barBlock span{
+	display:table-cell;
+	vertical-align:middle; 
+}
+
+
+
+.menu-header {
+	border-top: 1px solid #DFDFDF;
+	height: 187px;
+	background:
+		url(http://resjrprd.suning.com/finance/public/v1/mod/myfinmenu/style/images/menu-header.png)
+}
+
+#userIcon {
+	position: absolute;
+	top: 25px;
+	left: 69px;
+	width: 90px;
+	height: 90px; 
+	z-index: -1
+}
+
+.menu-header .user-name {
+	margin-top: 130px;
+	font-size: 14px;
+	font-family: "Microsoft Yahei";
+	font-weight: 700;
+	text-align: center
+}
+
+.menu-header .user-msg {
+	font-size: 12px;
+	font-family: "Microsoft Yahei";
+	text-align: center;
+	line-height: 30px
+}
+
+.menuArea {
+	position: fixed;
+	left: -215px;
+	width: 228px;
+	z-index: 100;
+}
+
+.menuList {
+	background: #EBF0F6;
+	box-shadow: -2px 0 1px rgba(0, 0, 0, .1);
+	border: 3px solid #A7B0B9;
+	border-top: none
+}
+
+#context {
+	position: absolute;
+	left: 25px;
+}
+
+.menuList .menu a {
+	position: relative;
+	line-height: 46px;
+	height: 46px;
+	font-size: 14px;
+	color: #666;
+	padding-left: 20px;
+	display: block;
+	outline: 0
+}
+
+.menuList a:hover {
+	background: #A7B0B9;
+	text-decoration: none
+}
+
+.menuList .focus {
+	height: 44px;
+	border-top: 1px solid #DFDFDF;
+	border-bottom: 1px solid #DFDFDF;
+	padding-left: 4px;
+	width: 225px
+}
+
+.menuList .focus a {
+	background-color: #FBF9FB;
+	line-height: 44px;
+	height: 44px
+}
+
+</style>
+
+<script type="text/javascript" src="lib/common/jquery-1.10.1.min.js"></script>
+<script type="text/javascript">
+
+	var menuDataList = [{href:'', name:'abce'}, 
+	                {href:'', name:'bbbb'}, 
+	                {href:'', name:'cccc'}, 
+	                {href:'', name:'dddd'}, 
+	                {href:'', name:'dddd'}, 
+	                {href:'', name:'eeee'}, 
+	                {href:'', name:'ffff'}, 
+	                {href:'', name:'hhhh'}, 
+	                {href:'', name:'iiii'}, 
+	                {href:'', name:'jjjj'}, 
+	                {href:'', name:'kkkk'}, 
+	                {href:'', name:'llll'}];
+
+	function isTouch() {
+	    return navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i) ? !0 : !1
+	}
+		
+	
+	$(document).ready(function() {
+		
+		loadMenu();
+		
+		isTouch() || (window.onscroll = function() {
+			var menuArea = $("#menuArea");
+			var clientHeight = document.documentElement.clientHeight;
+			var offsetHeight = menuArea[0].offsetHeight;
+			var scrollTop = $(document).scrollTop();
+			var top = menuArea[0].style.top;
+
+		    if (scrollTop < offsetHeight - clientHeight) {
+		    	menuArea.css({top : '-' + scrollTop + 'px'});
+		    }
+		});
+
+	    $('.menuLink').click(function(){
+	    	//var html = 
+	    	$('#context').html();
+	    });
+		$('#menuArea').mouseover(function(){
+			$(this).css({left: '0px'});
+		});
+		$('#menuArea').mouseout(function(){
+			$(this).css({left: '-215px'});
+		});
+		
+	});
+	
+	function loadMenu() {
+		var menuList = $('#menuList')
+		for (var i = 0; i < menuDataList.length; i++) {
+			obj = menuDataList[i];
+			var li = $('<li class="menu"></li>');
+			var alink = $('<a class="menuLink" href="">bbbb</a>');
+			alink.html(obj.name);
+			alink.href = obj.href;
+			alink.appendTo(li);
+			li.appendTo(menuList);
+		}
+	}
+	
+	
+</script>
+
+</head>
+
+<body>
+	<div id="container">
+		<div id="menuArea" class="menuArea">
+			<div class="menu-header" id="menuHeader">
+				<div class="user-name" id="menuUserName">admin</div>
+				<div class="user-msg" id="menuUserMsg">夜深了，该休息了！</div>
+			</div>
+			<img id="userIcon" class="userIcon" src="fancyBox/demo/a6.jpg">
+			<ul id="menuList" class="menuList">
+				<li class="menu"><a class="menuLink" href="summary.html">摄影简介</a></li>
+				<li class="menu"><a class="menuLink" href="contactMe.html">联系我们</a></li>
+			</ul>
+			<div>Copyright 南京新蜂摄影工作室 版权所有 </div>
+		</div>
+
+		<div id="context" class="context">
+			
+		</div>
+	</div>
+</body>
+</html>

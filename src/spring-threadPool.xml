@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:p="http://www.springframework.org/schema/p"  
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx" 
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+            http://www.springframework.org/schema/beans/spring-beans.xsd  
+		    http://www.springframework.org/schema/context   
+		    http://www.springframework.org/schema/context/spring-context.xsd  
+		    http://www.springframework.org/schema/aop  
+		    http://www.springframework.org/schema/aop/spring-aop.xsd  
+		    http://www.springframework.org/schema/tx  
+		    http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+	<!-- 任务队列配置-->  
+	<bean id="workQueue" class="java.util.concurrent.ArrayBlockingQueue" >
+		<constructor-arg type="int" value="1000000" />
+	</bean> 
+
+	<bean id="rejectedExecutionHandler" class="java.util.concurrent.ThreadPoolExecutor.AbortPolicy" />
+
+	<!-- 线程池基本配置-->  
+	<bean id="threadPoolConfig" class="com.cloudsea.sys.module.threadpool.ThreadPoolConfig">
+		<property name="corePoolSize" value="100"/>
+		<property name="maximumPoolSize" value="2000"/>
+		<property name="keepAliveTime" value="5"/>
+		<property name="timeUnitName" value="MINUTES"/>
+		<property name="workQueue">
+			<ref bean="workQueue" />
+		</property>
+		<property name="rejectedExecutionHandler">
+			<ref bean="rejectedExecutionHandler" />
+		</property>
+	</bean> 
+	
+	<!-- 线程池创建工厂-->  
+	<bean id="threadPoolFactory" class="com.cloudsea.sys.module.threadpool.ThreadPoolFactory">
+		<property name="config">
+			<ref bean="threadPoolConfig" />
+		</property>
+	</bean> 
+	
+	
+	
+	
+	</beans>

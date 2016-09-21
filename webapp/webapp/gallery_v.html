@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<!-- saved from url=(0046)http://zc.suning.com/myCF/showMyCF.htm#unknown -->
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>新蜂摄影</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+
+
+<style type="text/css">
+body, button, input, select, textarea {
+	font: 12px/1.5 'Microsoft Yahei', \5b8b\4f53
+}
+
+li, ol, ul {
+	list-style: none
+}
+
+body, button, dd, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, hr,
+	input, legend, li, ol, p, td, textarea, th, ul {
+	margin: 0;
+	padding: 0
+}
+
+body {
+	background-color: #FBF9FB;
+}
+
+a {
+	color: #333;
+	text-decoration: none;
+	outline: 0
+}
+
+.column {
+	padding-right: 20px;
+	float: left;
+	box-sizing: border-box;
+	display: block;
+}
+
+.gallery-item {
+	zoom: 1;
+	opacity: 1;
+	display: block;
+}
+
+.icon {
+	padding-bottom: 20px;
+	height: auto;
+	display: block;
+}
+#floatBar {
+	position:fixed; 
+    width: 75px;
+	right: -42px;
+	z-index:30; 
+	top:300;  
+    color: #FFF;
+	font-size: 14px;
+    font-weight: 700;
+    text-align: left;
+	padding-top:5px;
+}
+
+.barBlock {
+	background-color: #AEB2BD;
+	display:table;  
+}
+
+.barBlock span{
+	display:table-cell;
+	vertical-align:middle; 
+}
+</style>
+
+<style type="text/css">
+
+#uploadPic {
+	position:fixed; 
+    display: none;
+ 	left: 3000px;
+ 	top:70px;
+    width: 700px;
+    height: 450px;
+	z-index:999; 
+    background: #EFEEFF;
+    border: 1px solid CDCCDD;
+}
+
+.uploadItem {
+    float: left;
+    overflow: hidden;
+	padding-top:15px;
+	padding-left:15px;
+    cursor: pointer;
+}
+
+.uploadFile {
+    position: absolute;
+    z-index: 1000;
+    display: block;
+    width: 150px;
+    height: 150px;
+    font-size: 100px;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+
+#uploadPic a {
+    display: block;
+    float: left;
+    width: 150px;
+    height: 150px;
+    line-height: 150px;
+    color: #fff;
+    text-align: center;
+    background: #CCDDFF;
+}
+
+</style>	
+
+<script type="text/javascript" src="lib/common/jquery-1.10.1.min.js"></script>
+<script type="text/javascript" src="fancyBox/lib/jquery.mousewheel-3.0.6.pack.js"></script>
+<script type="text/javascript" src="fancyBox/source/jquery.fancybox.js?v=2.1.5"></script>
+<link rel="stylesheet" type="text/css" href="fancyBox/source/jquery.fancybox.css?v=2.1.5" media="screen" />
+
+<script type="text/javascript">
+
+		var colNum = 6;
+		var pictures = [ {
+			src : '1_s.jpg', icon_src:'fancyBox/demo/a' + (parseInt(11 * Math.random()) + 1) + '.jpg'
+		}, {
+			src : '2.gif', icon_src:'fancyBox/demo/a' + (parseInt(11 * Math.random()) + 1) + '.jpg'
+		}, {
+			src : '3.jpg', icon_src:'fancyBox/demo/a' + (parseInt(11 * Math.random()) + 1) + '.jpg'
+		}, {
+			src : '4.gif', icon_src:'fancyBox/demo/a' + (parseInt(11 * Math.random()) + 1) + '.jpg'
+		}, {
+			src : '2.gif', icon_src:'fancyBox/demo/a11.gif'
+		} , {
+			src : '2.gif', icon_src:'fancyBox/demo/a' + (parseInt(11 * Math.random()) + 1) + '.jpg'
+		}, {
+			src : '3.jpg', icon_src:'fancyBox/demo/a' + (parseInt(11 * Math.random()) + 1) + '.jpg'
+		}, {
+			src : '4.gif', icon_src:'fancyBox/demo/a' + (parseInt(11 * Math.random()) + 1) + '.jpg'
+		}, {
+			src : '2.gif', icon_src:'fancyBox/demo/a11.gif'
+		} , {
+			src : '2.gif', icon_src:'fancyBox/demo/a' + (parseInt(11 * Math.random()) + 1) + '.jpg'
+		}, {
+			src : '3.jpg', icon_src:'fancyBox/demo/a' + (parseInt(11 * Math.random()) + 1) + '.jpg'
+		}, {
+			src : '4.gif', icon_src:'fancyBox/demo/a' + (parseInt(11 * Math.random()) + 1) + '.jpg'
+		}, {
+			src : '2.gif', icon_src:'fancyBox/demo/a11.gif'
+		} ];
+
+	$(document).ready(function() {
+		var colWidth = parseInt(100 / colNum) + '%';
+		var ul = $('<ul></ul>');
+		ul.appendTo($('#gallery'));
+
+		for (var i = 0; i < colNum; i++) {
+			var column = $('<div></div>');
+			column.addClass('column');
+			column.width(colWidth);
+			column.appendTo(ul);
+		}
+
+		var i = 0;
+		while(i < 5) {
+			i++;
+			loadPictrue(getPictureData());
+			var scrollTop = $(document).scrollTop();
+			var shortH = document.shortestHeight;
+			if (shortH && scrollTop && scrollTop < shortH) {
+				break;
+			}
+		}
+
+		$(document).scroll(function() {
+			var scrollTop = $(document).scrollTop();
+			var shortH = document.shortestHeight;
+			if (shortH && (scrollTop + 500) > shortH) {
+				loadPictrue(getPictureData());
+			}
+			
+			var floatBar = $("#floatBar");
+			var top = (document.documentElement.clientHeight - floatBar[0].offsetHeight)/2 + 'px';
+			floatBar.css({top: top});
+		});
+		
+		$('#floatBar').mouseover(function(){
+			$('#floatBar').css({right: '0px'});
+		});
+		$('#floatBar').mouseout(function(){
+			$('#floatBar').css({right: '-42px'});
+		});
+		$('.barBlock').mouseover(function(){
+			$(this).css({cursor:'pointer', backgroundColor: '#0AD'});
+		});
+		$('.barBlock').mouseout(function(){
+			$(this).css({cursor:'pointer', backgroundColor: '#AEB2BD'});
+		});
+		$('#toTop').click(function(){
+			$("html,body").animate({scrollTop: 0}, 'fast');
+        });
+		$('#toUpload').click(function(){
+			var uploadPic = $("#uploadPic");
+			if (uploadPic.css("display") == 'block'){
+				uploadPic.animate({left: '3000px'}, 'fast', function(){
+				uploadPic.css({display: 'none'});
+				});
+			} else {				
+				uploadPic.css({display: 'block'});
+				uploadPic.animate({left: '300px'}, 'fast');
+			}
+        });
+		$('.uploadFile').on('change', function(){
+			if (ouloadFile(this)){
+				addUploadArea();
+			}
+        });
+		$('.fancybox').each(function() {
+			var img = $(this).find('img')[0];
+			this.href = img == null ? '' : img.src;
+		});
+		$('.fancybox').fancybox();
+	});
+	
+	function getPictureData(){
+		return pictures;
+	}
+	
+	function loadPictrue(pictures){
+		for (var i = 0; i < pictures.length; i++) {
+			var col = $('.column');
+			var index = getShortestCol(col);
+			col = $(col[index]);
+			
+			var li = $('<li></li>');
+			li.addClass('gallery-item');
+
+			var a = $('<a></a>');
+			a.attr('href', pictures[i].src);
+
+			var img = $('<img/>');
+			img.addClass('icon');
+			img.css({width: col.width()});
+			img.attr('src', pictures[i].icon_src);
+			
+			img.appendTo(a);
+			a.appendTo(li);
+			li.appendTo(col);
+		}
+	}
+	
+	function getShortestCol (array) {
+		var index = 0;
+		for (var i = 0; i < array.length; i++){
+			var iHeight = parseInt(array[i].offsetHeight);
+			var indexHeight = parseInt(array[index].offsetHeight);
+			if (iHeight < indexHeight) {
+				index = i;
+				document.shortestHeight = iHeight;
+			}
+		}
+		return index;
+	}
+	
+	function addUploadArea(){
+		uploadItem = $('<div class="uploadItem"></div>');
+		uploadBotton = $('<a class="uploadBotton">上传照片</a>');
+		file = $('<input type="file" class="uploadFile" name="files" size="0" />');
+		
+		file.appendTo(uploadItem);
+		uploadBotton.appendTo(uploadItem);
+		uploadItem.appendTo($('#uploadPic'));
+	}
+
+	function ouloadFile(file){
+		
+	}
+	
+</script>
+
+</head>
+
+<body>
+
+	<div id="gallery"></div>
+
+	<div id="floatBar">
+		<div id='toTop' class='barBlock'>
+			<img src='fancyBox/demo/toTop.gif'>
+			<span>回顶部</span>
+		</div>
+		<div id='toUpload' class='barBlock'>
+			<img src='fancyBox/demo/addPic.jpg'>
+			<span>传图片</span>
+		</div>
+	</div>
+
+
+	<form action="uploadPic" method="post" enctype="multipart/form-data">
+	<div id="uploadPic">
+		<div class="uploadItem">
+			<input type="file" class="uploadFile" name="files" size="0" />
+			<a class="uploadBotton" href="">上传照片</a>
+		</div>
+	</div>
+	</form>
+	
+</body>
+</html>
